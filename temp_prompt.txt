@@ -1,0 +1,15 @@
+<USER_REQUEST>
+야 내가 지금부터 android로 프로젝트를 만들꺼야 
+요구사항은
+Agentic Coding 기반 Android Native 앱 과제
+Kotlin + Jetpack Compose 단일 Android 앱 개발 과제 (주제 자유)
+
+본 과제는 Agent(예: AI 코딩 에이전트)와 협업하여, 실제 개발 프로젝트 수준의 기획·설계·구현·테스트·기록을 수행하는 것을 목표로 한다.
+
+기준 규모는 ./inventory 프로젝트 수준으로 하며, 코드뿐 아니라 과정 추적 문서를 반드시 제출해야 한다.
+
+1. 개발 범위
+플랫폼: Android Native (Kotlin + Jetpack Compose)
+주제: 자유 (예: 생활 관리, 학습 도구, 일정/메모, 취미 기록, 헬스케어 등)
+규모: ./inventory와 유사한 중소형 앱 (다중 화면, CRUD, 상태관리, 로컬 데이터 또는 원격 저장 포함. 원격에 데이터를 저장할 경우 백엔드 또는 데이터베이스가 최종 성적 공시일 까지 배포 유지해야 함.)
+<truncated 6931 bytes>

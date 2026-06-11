@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>칼로리 앱 - 요리 백과사전 UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>요리 백과사전</h1>
+    <p>프리미엄 안드로이드 네이티브 앱 목업</p>
+    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+      <a href="dashboard.html" style="color: var(--text-muted);">홈</a>
+      <a href="detail.html" style="color: var(--text-muted);">상세정보</a>
+      <a href="recipes.html" style="color: var(--primary);">레시피</a>
+      <a href="create.html" style="color: var(--text-muted);">직접등록</a>
+    </div>
+  </header>
+  
+  <main>
+    <div class="device">
+      <div class="screen">
+        <h2>레시피 사전</h2>
+        <p style="color: var(--text-muted);">식품안전나라 공공데이터 기반 국내 레시피 검색</p>
+        
+        <input type="text" placeholder="재료나 요리명을 검색해보세요 (예: 김치찌개, 라면)..." value="김치">
+        
+        <div class="glass-card" style="margin-top: 20px;">
+          <img src="https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=800" alt="Recipe" class="hero-img" style="height: 150px;">
+          <h3>돼지고기 김치찌개</h3>
+          <p style="color: var(--text-muted);">국&찌개 • 한식</p>
+          <button class="button button-outline" style="margin-top: 10px; padding: 10px;">💾 내 사전으로 가져오기</button>
+        </div>
+        
+        <div class="glass-card">
+          <img src="https://images.unsplash.com/photo-1627907228175-1ebc4ce8e7ea?w=800" alt="Recipe" class="hero-img" style="height: 150px;">
+          <h3>칼륨 듬뿍 고구마죽</h3>
+          <p style="color: var(--text-muted);">기타 • 끓이기</p>
+          <button class="button button-outline" style="margin-top: 10px; padding: 10px;">💾 내 사전으로 가져오기</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
