@@ -68,4 +68,34 @@ class MealDbApi {
             )
         }
     }
+
+    suspend fun searchIngredientKcal(name: String): Int? {
+        val originalQuery = name.trim()
+        if (originalQuery.isBlank()) return null
+        val encoded = URLEncoder.encode(originalQuery, "UTF-8")
+        
+        // 식품안전나라 식품영양성분 DB (I2790) - 샘플키 사용 (실제 서비스시 키 발급 필요)
+        val url = URL("http://openapi.foodsafetykorea.go.kr/api/$apiKey/I2790/json/1/1/DESC_KOR=$encoded")
+        
+        return runCatching {
+            val connection = (url.openConnection() as HttpURLConnection).apply {
+                requestMethod = "GET"
+                connectTimeout = 3_000
+                readTimeout = 3_000
+            }
+            connection.inputStream.bufferedReader().use { reader ->
+                val responseText = reader.readText()
+                val json = JSONObject(responseText)
+                val root = json.optJSONObject("I2790")
+                val rows = root?.optJSONArray("row")
+                if (rows != null && rows.length() > 0) {
+                    val firstItem = rows.getJSONObject(0)
+                    // NUTR_CONT1: 열량(kcal)
+                    firstItem.optString("NUTR_CONT1").toDoubleOrNull()?.toInt()
+                } else null
+            }.also {
+                connection.disconnect()
+            }
+        }.getOrNull()
+    }
 }

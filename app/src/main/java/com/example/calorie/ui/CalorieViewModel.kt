@@ -35,6 +35,9 @@ class CalorieViewModel(private val repository: FoodRepository) : ViewModel() {
     private val _capturedPhotoUri = MutableStateFlow<String?>(null)
     val capturedPhotoUri: StateFlow<String?> = _capturedPhotoUri
 
+    private val _capturedAiName = MutableStateFlow<String?>(null)
+    val capturedAiName: StateFlow<String?> = _capturedAiName
+
     private val _recipeSearchState = MutableStateFlow(RecipeSearchState())
     val recipeSearchState: StateFlow<RecipeSearchState> = _recipeSearchState
 
@@ -114,6 +117,10 @@ class CalorieViewModel(private val repository: FoodRepository) : ViewModel() {
 
     fun setCapturedPhotoUri(uri: String?) {
         _capturedPhotoUri.value = uri
+    }
+
+    fun setCapturedAiName(name: String?) {
+        _capturedAiName.value = name
     }
 
     fun clearMessage() {

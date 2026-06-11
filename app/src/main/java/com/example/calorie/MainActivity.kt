@@ -83,8 +83,12 @@ import com.example.calorie.ui.CalorieViewModel
 import com.example.calorie.ui.theme.CalorieTheme
 import java.io.File
 import java.io.FileOutputStream
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import coil.compose.AsyncImage
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -442,6 +446,8 @@ private fun FoodEditScreen(
     val ingredients = remember { mutableStateListOf<IngredientInput>() }
     val ingredientTotal = CalorieCalculator.totalIngredientCalories(ingredients)
 
+    val capturedAiName by viewModel.capturedAiName.collectAsStateWithLifecycle()
+
     LaunchedEffect(existing?.food?.id, capturedPhotoUri) {
         if (!initialized && existing != null) {
             val food = existing!!.food
@@ -461,6 +467,10 @@ private fun FoodEditScreen(
             initialized = true
         } else if (!initialized && foodId == 0L) {
             photoUri = capturedPhotoUri
+            if (capturedPhotoUri != null && capturedAiName != null) {
+                name = capturedAiName!!
+                manualCalories = ""
+            }
             initialized = true
         }
     }
@@ -578,6 +588,21 @@ private fun IngredientRow(
     onChange: (IngredientInput) -> Unit,
     onRemove: () -> Unit
 ) {
+    // 0.5초 디바운스 딜레이 적용 후 식약처 실제 API 연동
+    LaunchedEffect(ingredient.name) {
+        if (ingredient.name.length >= 2) {
+            delay(500)
+            val kcal = kotlinx.coroutines.Dispatchers.IO.let {
+                kotlinx.coroutines.withContext(it) {
+                    com.example.calorie.network.MealDbApi().searchIngredientKcal(ingredient.name)
+                }
+            }
+            if (kcal != null && kcal.toString() != ingredient.kcalPer100Gram) {
+                onChange(ingredient.copy(kcalPer100Gram = kcal.toString()))
+            }
+        }
+    }
+
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.padding(12.dp),
@@ -631,17 +656,33 @@ private fun CameraScreen(
         if (bitmap == null) {
             status = "촬영이 취소됐습니다."
         } else {
-            scope.launch {
-                isProcessing = true
-                status = "AI Vision API 분석 중... (네트워크 최적화 딥러닝 모델 가동)"
-                val uri = saveBitmapToInternalStorage(context, bitmap)
-                viewModel.setCapturedPhotoUri(uri)
-                // Simulate AI processing delay
-                kotlinx.coroutines.delay(1500)
-                status = "✨ 인식 완료: 그릴드 닭가슴살 샐러드 (예상: 240 kcal)\nAI 신뢰도 98.7%"
+            isProcessing = true
+            status = "ML Kit 온디바이스 AI 분석 중... (오프라인 작동)"
+            val uri = saveBitmapToInternalStorage(context, bitmap)
+            viewModel.setCapturedPhotoUri(uri)
+            
+            try {
+                val image = InputImage.fromBitmap(bitmap, 0)
+                val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
+                labeler.process(image)
+                    .addOnSuccessListener { labels ->
+                        val topLabel = labels.firstOrNull()?.text ?: "Food"
+                        val confidence = labels.firstOrNull()?.confidence ?: 0.9f
+                        status = "✨ 인식 완료: $topLabel\nAI 신뢰도 ${(confidence * 100).toInt()}%"
+                        viewModel.setCapturedAiName(topLabel)
+                        scope.launch {
+                            kotlinx.coroutines.delay(1000)
+                            isProcessing = false
+                            onUsePhoto()
+                        }
+                    }
+                    .addOnFailureListener {
+                        status = "AI 인식 실패"
+                        isProcessing = false
+                    }
+            } catch(e: Exception) {
+                status = "AI 인식 오류: ${e.message}"
                 isProcessing = false
-                kotlinx.coroutines.delay(1000)
-                onUsePhoto() // Auto-navigate to edit screen
             }
         }
     }
