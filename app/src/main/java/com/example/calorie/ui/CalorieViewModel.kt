@@ -20,8 +20,102 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CalorieViewModel(private val repository: FoodRepository) : ViewModel() {
+import com.example.calorie.data.MealRecordEntity
+import com.example.calorie.data.MealRecordWithFood
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapLatest
+
+import android.content.SharedPreferences
+import kotlinx.coroutines.flow.combine
+
+class CalorieViewModel(
+    private val repository: FoodRepository,
+    private val prefs: SharedPreferences
+) : ViewModel() {
     private val mealDbApi = MealDbApi()
+
+    private val _currentDate = MutableStateFlow(LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE))
+    val currentDate: StateFlow<String> = _currentDate
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val dailyMeals: StateFlow<List<MealRecordWithFood>> = _currentDate.flatMapLatest { date ->
+        repository.observeMealsByDate(date)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
+    val height = MutableStateFlow(prefs.getString("height", "") ?: "")
+    val weight = MutableStateFlow(prefs.getString("weight", "") ?: "")
+    val age = MutableStateFlow(prefs.getString("age", "") ?: "")
+    val gender = MutableStateFlow(prefs.getString("gender", "여성") ?: "여성")
+    val activityLevel = MutableStateFlow(prefs.getString("activityLevel", "보통") ?: "보통")
+
+    val targetCalories: StateFlow<Int> = combine(height, weight, age, gender, activityLevel) { h, w, a, g, act ->
+        val hVal = h.toFloatOrNull() ?: return@combine 2000
+        val wVal = w.toFloatOrNull() ?: return@combine 2000
+        val aVal = a.toIntOrNull() ?: return@combine 2000
+        
+        // Mifflin-St Jeor Equation
+        var bmr = (10 * wVal) + (6.25f * hVal) - (5 * aVal)
+        bmr += if (g == "남성") 5f else -161f
+
+        val multiplier = when (act) {
+            "적음" -> 1.2f
+            "보통" -> 1.375f
+            "많음" -> 1.55f
+            "아주 많음" -> 1.725f
+            else -> 1.375f
+        }
+        (bmr * multiplier).toInt()
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 2000)
+
+    fun saveProfile(h: String, w: String, a: String, g: String, act: String) {
+        height.value = h
+        weight.value = w
+        age.value = a
+        gender.value = g
+        activityLevel.value = act
+        prefs.edit()
+            .putString("height", h)
+            .putString("weight", w)
+            .putString("age", a)
+            .putString("gender", g)
+            .putString("activityLevel", act)
+            .apply()
+        _message.value = "프로필이 저장됐어. 목표 칼로리가 업데이트됐어!"
+    }
+
+    fun previousDay() {
+        val current = LocalDate.parse(_currentDate.value)
+        _currentDate.value = current.minusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE)
+    }
+
+    fun nextDay() {
+        val current = LocalDate.parse(_currentDate.value)
+        _currentDate.value = current.plusDays(1).format(DateTimeFormatter.ISO_LOCAL_DATE)
+    }
+
+    fun addMealRecord(foodId: Long, mealType: String, consumedGrams: Int, consumedCalories: Int) {
+        viewModelScope.launch {
+            repository.saveMealRecord(
+                MealRecordEntity(
+                    date = _currentDate.value,
+                    foodItemId = foodId,
+                    mealType = mealType,
+                    consumedGrams = consumedGrams,
+                    consumedCalories = consumedCalories
+                )
+            )
+            _message.value = "다이어리에 추가됐어."
+        }
+    }
+
+    fun deleteMealRecord(id: Long) {
+        viewModelScope.launch {
+            repository.deleteMealRecord(id)
+            _message.value = "다이어리에서 삭제됐어."
+        }
+    }
 
     val foods: StateFlow<List<FoodItemEntity>> = repository.foods.stateIn(
         scope = viewModelScope,
@@ -42,9 +136,7 @@ class CalorieViewModel(private val repository: FoodRepository) : ViewModel() {
     val recipeSearchState: StateFlow<RecipeSearchState> = _recipeSearchState
 
     init {
-        viewModelScope.launch {
-            repository.seedIfEmpty()
-        }
+
     }
 
     fun observeFood(id: Long): Flow<FoodWithIngredients?> = repository.observeFood(id)
@@ -81,7 +173,7 @@ class CalorieViewModel(private val repository: FoodRepository) : ViewModel() {
     }
 
     fun searchRecipes() {
-        val query = _recipeSearchState.value.query.ifBlank { "chicken" }
+        val query = _recipeSearchState.value.query.ifBlank { "밥" }
         _recipeSearchState.update { it.copy(isLoading = true, error = null, recipes = emptyList()) }
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -127,10 +219,13 @@ class CalorieViewModel(private val repository: FoodRepository) : ViewModel() {
         _message.value = null
     }
 
-    class Factory(private val repository: FoodRepository) : ViewModelProvider.Factory {
+    class Factory(
+        private val repository: FoodRepository,
+        private val prefs: SharedPreferences
+    ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return CalorieViewModel(repository) as T
+            return CalorieViewModel(repository, prefs) as T
         }
     }
 }

@@ -40,4 +40,14 @@ interface FoodDao {
 
     @Query("SELECT * FROM recipes ORDER BY importedAt DESC")
     fun observeRecipes(): Flow<List<RecipeEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMealRecord(record: MealRecordEntity)
+
+    @Query("DELETE FROM meal_records WHERE id = :id")
+    suspend fun deleteMealRecord(id: Long)
+
+    @Transaction
+    @Query("SELECT * FROM meal_records WHERE date = :date ORDER BY timestamp DESC")
+    fun observeMealsByDate(date: String): Flow<List<MealRecordWithFood>>
 }

@@ -8,11 +8,13 @@ data class MealDbRecipe(
     val instructions: String,
     val imageUrl: String?,
     val sourceUrl: String?,
-    val ingredients: List<String>
+    val ingredients: List<String>,
+    val kcal: String,
+    val servingSize: String
 )
 
 data class RecipeSearchState(
-    val query: String = "chicken",
+    val query: String = "",
     val isLoading: Boolean = false,
     val recipes: List<MealDbRecipe> = emptyList(),
     val error: String? = null

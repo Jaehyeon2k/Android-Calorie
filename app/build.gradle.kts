@@ -55,7 +55,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
     implementation(libs.coil.compose)
-    implementation("com.google.mlkit:image-labeling:17.0.9")
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.room.testing)

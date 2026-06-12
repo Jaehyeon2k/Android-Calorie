@@ -24,15 +24,15 @@ data class ValidationResult(
 )
 
 object CalorieCalculator {
-    fun ingredientCalories(weightGram: Int, kcalPer100Gram: Int): Int {
-        return (weightGram * kcalPer100Gram) / 100
+    fun ingredientCalories(weightGram: Double, kcalPer100Gram: Double): Int {
+        return ((weightGram * kcalPer100Gram) / 100).toInt()
     }
 
     fun totalIngredientCalories(ingredients: List<IngredientInput>): Int {
         return ingredients.sumOf {
             ingredientCalories(
-                weightGram = it.weightGram.toIntOrNull() ?: 0,
-                kcalPer100Gram = it.kcalPer100Gram.toIntOrNull() ?: 0
+                weightGram = it.weightGram.toDoubleOrNull() ?: 0.0,
+                kcalPer100Gram = it.kcalPer100Gram.toDoubleOrNull() ?: 0.0
             )
         }
     }

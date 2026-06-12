@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [FoodItemEntity::class, IngredientEntity::class, RecipeEntity::class],
-    version = 2,
+    entities = [FoodItemEntity::class, IngredientEntity::class, RecipeEntity::class, MealRecordEntity::class],
+    version = 3,
     exportSchema = false
 )
 abstract class CalorieDatabase : RoomDatabase() {

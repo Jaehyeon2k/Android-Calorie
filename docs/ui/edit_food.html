@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Calorie Tracker - ?뚯떇 ?깅줉</title>
+    <style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef4ff; display: flex; justify-content: center; padding: 20px; margin: 0; } .device { width: 375px; height: 812px; background: white; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 8px solid #333; overflow: hidden; display: flex; flex-direction: column; position: relative; } .status-bar { height: 24px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; font-size: 12px; color: #333; font-weight: bold; border-bottom: 1px solid #eee; } .header { background: #1768e5; color: white; padding: 16px; text-align: center; font-size: 1.2rem; font-weight: bold; } .content { padding: 16px; flex: 1; overflow-y: auto; background: #f6f8fb; } .bottom-nav { display: flex; background: #fff; border-top: 1px solid #dbe2ee; padding-bottom: 20px; } .nav-item { flex: 1; text-align: center; padding: 12px 0; color: #5a6478; font-size: 0.85rem; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; } .nav-item.active { color: #1768e5; font-weight: bold; } .nav-icon { width: 24px; height: 24px; background: #ccc; border-radius: 50%; } .nav-item.active .nav-icon { background: #1768e5; } .card { background: #fff; border: 1px solid #dbe2ee; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); } .btn { display: block; width: 100%; padding: 14px; background: #1768e5; color: white; text-align: center; border-radius: 8px; text-decoration: none; border: none; font-weight: bold; margin-top: 8px; cursor: pointer; font-size: 1rem;} .btn-outline { background: white; color: #1768e5; border: 1px solid #1768e5; } .input-box { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; font-size: 1rem; } .label { font-size: 0.9rem; color: #333; margin-bottom: 4px; display: block; font-weight: 500; } .progress-container { width: 100%; background: #e0e0e0; height: 12px; border-radius: 6px; margin-top: 10px; overflow: hidden; } .progress-bar { width: 45%; background: #1768e5; height: 100%; border-radius: 6px; } .flex-row { display: flex; justify-content: space-between; align-items: center; } .text-muted { color: #5a6478; font-size: 0.9rem; } .toggle-switch { width: 40px; height: 20px; background: #1768e5; border-radius: 10px; position: relative; display: inline-block; } .toggle-switch::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; right: 2px; } .ingredient-row { display: flex; gap: 8px; margin-bottom: 8px; } .ingredient-row .input-box { margin-bottom: 0; }
+</style>
+</head>
+<body>
+    <div class="device">
+        <div class="status-bar"><span>12:00</span><span>100%</span></div>
+        <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="foods.html" style="color: white; text-decoration: none; font-size: 1rem;">&lt; ?ㅻ줈</a>
+            <span>?뚯떇 ?깅줉</span>
+            <span style="color: white; font-weight: bold; cursor: pointer;">???/span>
+        </div>
+        <div class="content">
+            <label class="label">?뚯떇 ?대쫫 (?먮룞 怨듦났?곗씠???곕룞)</label>
+            <input type="text" class="input-box" value="?섏젣 ????댁궡 ?먮윭??>
+            
+            <label class="label">移댄뀒怨좊━</label>
+            <input type="text" class="input-box" value="?먮윭?쒕쪟">
+            
+            <div style="display: flex; gap: 12px;">
+                <div style="flex: 1;">
+                    <label class="label">?쒓났??(g)</label>
+                    <input type="number" class="input-box" value="250">
+                </div>
+                <div style="flex: 1;">
+                    <label class="label">理쒖쥌 kcal</label>
+                    <input type="number" class="input-box" value="350" readonly style="background: #eee;">
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 8px;">
+                <div class="flex-row" style="margin-bottom: 12px;">
+                    <span style="font-weight: bold;">吏곸젒 留뚮뱺 ?뚯떇 (?덉떆??</span>
+                    <div class="toggle-switch"></div>
+                </div>
+                <button class="btn btn-outline" style="padding: 10px; margin-bottom: 16px;">?벜 媛ㅻ윭由ъ뿉???ъ쭊 泥⑤?</button>
+                <div style="width: 100%; height: 120px; background: #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; margin-bottom: 16px;">[?ъ쭊 ?곸뿭]</div>
+                
+                <div class="flex-row" style="margin-bottom: 8px;">
+                    <span style="font-weight: bold;">?щ즺 ?⑹궛: 350 kcal</span>
+                </div>
+                
+                <div class="ingredient-row">
+                    <input type="text" class="input-box" value="????댁궡" style="flex: 2;" placeholder="?щ즺紐?>
+                    <input type="number" class="input-box" value="100" style="flex: 1;" placeholder="g">
+                    <input type="number" class="input-box" value="110" style="flex: 1; background: #eee;" readonly>
+                    <button style="border: none; background: none; color: red; font-weight: bold; cursor: pointer;">X</button>
+                </div>
+                <div class="ingredient-row">
+                    <input type="text" class="input-box" value="?묒긽異? style="flex: 2;" placeholder="?щ즺紐?>
+                    <input type="number" class="input-box" value="150" style="flex: 1;" placeholder="g">
+                    <input type="number" class="input-box" value="33" style="flex: 1; background: #eee;" readonly>
+                    <button style="border: none; background: none; color: red; font-weight: bold; cursor: pointer;">X</button>
+                </div>
+                <button class="btn" style="padding: 10px;">+ ?щ즺 異붽?</button>
+            </div>
+            
+            <label class="label">硫붾え</label>
+            <textarea class="input-box" rows="3" placeholder="?덉떆?쇰굹 二쇱쓽?ы빆 硫붾え..."></textarea>
+        </div>
+    </div>
+</body>
+</html>
+
