@@ -37,6 +37,18 @@ erDiagram
         Int intakeGrams
         Int calculatedCalories
     }
+    
+    RecipeEntity {
+        String externalId PK
+        String name
+        String category
+        String area
+        String instructions
+        String imageUrl
+        String sourceUrl
+        String ingredientsText
+        Long importedAt
+    }
 ```
 
 ## 2. 테이블 설명
@@ -48,3 +60,5 @@ erDiagram
 3. **MealRecordEntity (식사 기록 테이블):**
    * 특정 날짜(`date`), 특정 시간대(`mealType`)에 사용자가 섭취한 음식 기록.
    * `foodId`를 통해 FoodEntity와 논리적 외래키(FK) 관계를 맺음.
+4. **RecipeEntity (요리백과 레시피 테이블):**
+   * 공공데이터포털에서 가져온 공식 레시피 데이터를 오프라인 캐싱 용도로 저장.

@@ -1,20 +1,42 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Calorie Tracker - ?ㅼ씠?대━</title>
+    <title>Calorie Tracker - 다이어리</title>
     <style>
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef4ff; display: flex; justify-content: center; padding: 20px; margin: 0; } .device { width: 375px; height: 812px; background: white; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 8px solid #333; overflow: hidden; display: flex; flex-direction: column; position: relative; } .status-bar { height: 24px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; font-size: 12px; color: #333; font-weight: bold; border-bottom: 1px solid #eee; } .header { background: #1768e5; color: white; padding: 16px; text-align: center; font-size: 1.2rem; font-weight: bold; } .content { padding: 16px; flex: 1; overflow-y: auto; background: #f6f8fb; } .bottom-nav { display: flex; background: #fff; border-top: 1px solid #dbe2ee; padding-bottom: 20px; } .nav-item { flex: 1; text-align: center; padding: 12px 0; color: #5a6478; font-size: 0.85rem; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; } .nav-item.active { color: #1768e5; font-weight: bold; } .nav-icon { width: 24px; height: 24px; background: #ccc; border-radius: 50%; } .nav-item.active .nav-icon { background: #1768e5; } .card { background: #fff; border: 1px solid #dbe2ee; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); } .btn { display: block; width: 100%; padding: 14px; background: #1768e5; color: white; text-align: center; border-radius: 8px; text-decoration: none; border: none; font-weight: bold; margin-top: 8px; cursor: pointer; font-size: 1rem;} .btn-outline { background: white; color: #1768e5; border: 1px solid #1768e5; } .input-box { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; font-size: 1rem; } .label { font-size: 0.9rem; color: #333; margin-bottom: 4px; display: block; font-weight: 500; } .progress-container { width: 100%; background: #e0e0e0; height: 12px; border-radius: 6px; margin-top: 10px; overflow: hidden; } .progress-bar { width: 45%; background: #1768e5; height: 100%; border-radius: 6px; } .flex-row { display: flex; justify-content: space-between; align-items: center; } .text-muted { color: #5a6478; font-size: 0.9rem; } .toggle-switch { width: 40px; height: 20px; background: #1768e5; border-radius: 10px; position: relative; display: inline-block; } .toggle-switch::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; right: 2px; } .ingredient-row { display: flex; gap: 8px; margin-bottom: 8px; } .ingredient-row .input-box { margin-bottom: 0; }
-</style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef4ff; display: flex; justify-content: center; padding: 20px; margin: 0; }
+.device { width: 375px; height: 812px; background: white; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 8px solid #333; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+.status-bar { height: 24px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; font-size: 12px; color: #333; font-weight: bold; border-bottom: 1px solid #eee; }
+.header { background: #1768e5; color: white; padding: 16px; text-align: center; font-size: 1.2rem; font-weight: bold; }
+.content { padding: 16px; flex: 1; overflow-y: auto; background: #f6f8fb; }
+.bottom-nav { display: flex; background: #fff; border-top: 1px solid #dbe2ee; padding-bottom: 20px; }
+.nav-item { flex: 1; text-align: center; padding: 12px 0; color: #5a6478; font-size: 0.85rem; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.nav-item.active { color: #1768e5; font-weight: bold; }
+.nav-icon { width: 24px; height: 24px; background: #ccc; border-radius: 50%; }
+.nav-item.active .nav-icon { background: #1768e5; }
+.card { background: #fff; border: 1px solid #dbe2ee; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+.btn { display: block; width: 100%; padding: 14px; background: #1768e5; color: white; text-align: center; border-radius: 8px; text-decoration: none; border: none; font-weight: bold; margin-top: 8px; cursor: pointer; font-size: 1rem;}
+.btn-outline { background: white; color: #1768e5; border: 1px solid #1768e5; }
+.input-box { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; font-size: 1rem; }
+.label { font-size: 0.9rem; color: #333; margin-bottom: 4px; display: block; font-weight: 500; }
+.progress-container { width: 100%; background: #e0e0e0; height: 12px; border-radius: 6px; margin-top: 10px; overflow: hidden; }
+.progress-bar { width: 45%; background: #1768e5; height: 100%; border-radius: 6px; }
+.flex-row { display: flex; justify-content: space-between; align-items: center; }
+.text-muted { color: #5a6478; font-size: 0.9rem; }
+.toggle-switch { width: 40px; height: 20px; background: #1768e5; border-radius: 10px; position: relative; display: inline-block; }
+.toggle-switch::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; right: 2px; }
+.ingredient-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.ingredient-row .input-box { margin-bottom: 0; }
+    </style>
 </head>
 <body>
     <div class="device">
         <div class="status-bar"><span>12:00</span><span>100%</span></div>
-        <div class="header">?ㅻ뒛???ㅼ씠?대━ (6??12??</div>
+        <div class="header">오늘의 다이어리 (6월 12일)</div>
         <div class="content">
             <div class="card" style="text-align: center;">
-                <h3 style="margin-top: 0;">?⑥? 移쇰줈由? 1,350 kcal</h3>
-                <p class="text-muted" style="margin: 0;">紐⑺몴: 2,500 / ??랬: 1,150</p>
+                <h3 style="margin-top: 0;">남은 칼로리: 1,350 kcal</h3>
+                <p class="text-muted" style="margin: 0;">목표: 2,500 / 섭취: 1,150</p>
                 <div class="progress-container">
                     <div class="progress-bar"></div>
                 </div>
@@ -22,43 +44,46 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 
             <div class="card">
                 <div class="flex-row" style="margin-bottom: 12px;">
-                    <h4 style="margin: 0;">?꾩묠 ?앹궗</h4>
+                    <h4 style="margin: 0;">아침 식사</h4>
                     <span style="font-weight: bold; color: #1768e5;">350 kcal</span>
                 </div>
                 <div class="flex-row text-muted" style="margin-bottom: 6px;">
-                    <span>?ㅽ듃諛 100g</span><span>350 kcal</span>
+                    <span>오트밀 100g</span>
+                    <span>150 kcal</span>
                 </div>
-                <button class="btn btn-outline" style="padding: 8px; margin-top: 12px;">+ ?꾩묠 異붽?</button>
+                <div class="flex-row text-muted">
+                    <span>사과 1개</span>
+                    <span>200 kcal</span>
+                </div>
+                <button class="btn btn-outline" style="margin-top: 16px; padding: 8px;">+ 음식 추가</button>
             </div>
 
             <div class="card">
                 <div class="flex-row" style="margin-bottom: 12px;">
-                    <h4 style="margin: 0;">?먯떖 ?앹궗</h4>
+                    <h4 style="margin: 0;">점심 식사</h4>
                     <span style="font-weight: bold; color: #1768e5;">800 kcal</span>
                 </div>
-                <div class="flex-row text-muted" style="margin-bottom: 6px;">
-                    <span>?섏젣 ????댁궡 ?먮윭??1媛?/span><span>350 kcal</span>
+                <div class="flex-row text-muted">
+                    <span>김치찌개 1인분</span>
+                    <span>800 kcal</span>
                 </div>
-                <div class="flex-row text-muted" style="margin-bottom: 6px;">
-                    <span>?⑤갚吏??먯씠??1??/span><span>450 kcal</span>
-                </div>
-                <button class="btn btn-outline" style="padding: 8px; margin-top: 12px;">+ ?먯떖 異붽?</button>
-            </div>
-            
-            <div class="card">
-                <div class="flex-row">
-                    <h4 style="margin: 0;">????앹궗</h4>
-                    <span class="text-muted">0 kcal</span>
-                </div>
-                <button class="btn btn-outline" style="padding: 8px; margin-top: 12px;">+ ???異붽?</button>
+                <button class="btn btn-outline" style="margin-top: 16px; padding: 8px;">+ 음식 추가</button>
             </div>
         </div>
         <div class="bottom-nav">
-            <a href="index.html" class="nav-item active"><div class="nav-icon"></div>?ㅼ씠?대━</a>
-            <a href="foods.html" class="nav-item"><div class="nav-icon"></div>?뚯떇 紐⑸줉</a>
-            <a href="profile.html" class="nav-item"><div class="nav-icon"></div>?꾨줈??/a>
+            <a href="index.html" class="nav-item active">
+                <div class="nav-icon" style="background-color: #1768e5"></div>
+                다이어리
+            </a>
+            <a href="foods.html" class="nav-item ">
+                <div class="nav-icon" style="background-color: #ccc"></div>
+                음식사전
+            </a>
+            <a href="profile.html" class="nav-item ">
+                <div class="nav-icon" style="background-color: #ccc"></div>
+                내 정보
+            </a>
         </div>
     </div>
 </body>
 </html>
-

@@ -333,10 +333,7 @@ private fun RecipeExplorerScreen(
     ) {
         item {
             OutlinedButton(onClick = onBack) { Text("뒤로") }
-            HeroHeader(
-                title = "한국 음식 레시피 백과",
-                subtitle = "식품안전나라(식약처) API에서 한식 레시피와 이미지를 가져와 음식 사전에 저장"
-            )
+
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -949,7 +946,6 @@ fun ProfileScreen(viewModel: CalorieViewModel) {
     ) {
         item {
             Text("내 정보 및 BMI / 목표 칼로리 계산기", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-            Text("오프라인 상태에서도 기초대사량과 권장 칼로리를 계산해줍니다.", color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(modifier = Modifier.height(10.dp))
         }
 

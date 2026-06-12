@@ -14,6 +14,8 @@
 | TC-03 | API 검색 지능형 필터 | `FOOD_NM_KR` 길이를 비교하고 튀김/가공/양념 페널티를 부여하여 최적의 생식품 반환 | **PASS** | 기존 240kcal 버그 해결 |
 | TC-04 | API 없는 음식 0 리셋 | 매칭 실패 시 `manualCalories = "0"` 처리 확인 | **PASS** | |
 | TC-05 | UX 키보드 숨김 | `detectTapGestures` 및 `focusManager.clearFocus()` 호출 정상 작동 | **PASS** | 스크롤 컨테이너에도 적용 완료 |
+| TC-06 | UI(Compose) 화면 렌더링 테스트 | Compose Test Rule 기반으로 주요 화면 3개(다이어리/음식사전/프로필) 렌더링 검증 완료 | **PASS** | `CalorieAppTest.kt` 실행 완료 |
+| TC-07 | 정적 분석 (Android Lint) | `./gradlew lint` 실행 결과, 치명적 에러 없음 및 사용하지 않는 리소스/코드 경고(Warning) 제거 완료 | **PASS** | |
 
 ## 3. 종합 의견
 모든 핵심 CRUD, API 연동, 비즈니스 로직(칼로리 계산)이 엣지 케이스(소수점, 통신 실패) 환경에서도 크래시 없이 견고하게 동작함을 확인하였다.

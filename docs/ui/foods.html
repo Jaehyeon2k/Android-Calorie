@@ -1,55 +1,93 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Calorie Tracker - ?뚯떇 紐⑸줉</title>
+    <title>Calorie Tracker - 음식 사전</title>
     <style>
-body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef4ff; display: flex; justify-content: center; padding: 20px; margin: 0; } .device { width: 375px; height: 812px; background: white; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 8px solid #333; overflow: hidden; display: flex; flex-direction: column; position: relative; } .status-bar { height: 24px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; font-size: 12px; color: #333; font-weight: bold; border-bottom: 1px solid #eee; } .header { background: #1768e5; color: white; padding: 16px; text-align: center; font-size: 1.2rem; font-weight: bold; } .content { padding: 16px; flex: 1; overflow-y: auto; background: #f6f8fb; } .bottom-nav { display: flex; background: #fff; border-top: 1px solid #dbe2ee; padding-bottom: 20px; } .nav-item { flex: 1; text-align: center; padding: 12px 0; color: #5a6478; font-size: 0.85rem; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; } .nav-item.active { color: #1768e5; font-weight: bold; } .nav-icon { width: 24px; height: 24px; background: #ccc; border-radius: 50%; } .nav-item.active .nav-icon { background: #1768e5; } .card { background: #fff; border: 1px solid #dbe2ee; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); } .btn { display: block; width: 100%; padding: 14px; background: #1768e5; color: white; text-align: center; border-radius: 8px; text-decoration: none; border: none; font-weight: bold; margin-top: 8px; cursor: pointer; font-size: 1rem;} .btn-outline { background: white; color: #1768e5; border: 1px solid #1768e5; } .input-box { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; font-size: 1rem; } .label { font-size: 0.9rem; color: #333; margin-bottom: 4px; display: block; font-weight: 500; } .progress-container { width: 100%; background: #e0e0e0; height: 12px; border-radius: 6px; margin-top: 10px; overflow: hidden; } .progress-bar { width: 45%; background: #1768e5; height: 100%; border-radius: 6px; } .flex-row { display: flex; justify-content: space-between; align-items: center; } .text-muted { color: #5a6478; font-size: 0.9rem; } .toggle-switch { width: 40px; height: 20px; background: #1768e5; border-radius: 10px; position: relative; display: inline-block; } .toggle-switch::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; right: 2px; } .ingredient-row { display: flex; gap: 8px; margin-bottom: 8px; } .ingredient-row .input-box { margin-bottom: 0; }
-</style>
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef4ff; display: flex; justify-content: center; padding: 20px; margin: 0; }
+.device { width: 375px; height: 812px; background: white; border-radius: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 8px solid #333; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+.status-bar { height: 24px; background: #fff; display: flex; justify-content: space-between; align-items: center; padding: 0 16px; font-size: 12px; color: #333; font-weight: bold; border-bottom: 1px solid #eee; }
+.header { background: #1768e5; color: white; padding: 16px; text-align: center; font-size: 1.2rem; font-weight: bold; }
+.content { padding: 16px; flex: 1; overflow-y: auto; background: #f6f8fb; }
+.bottom-nav { display: flex; background: #fff; border-top: 1px solid #dbe2ee; padding-bottom: 20px; }
+.nav-item { flex: 1; text-align: center; padding: 12px 0; color: #5a6478; font-size: 0.85rem; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.nav-item.active { color: #1768e5; font-weight: bold; }
+.nav-icon { width: 24px; height: 24px; background: #ccc; border-radius: 50%; }
+.nav-item.active .nav-icon { background: #1768e5; }
+.card { background: #fff; border: 1px solid #dbe2ee; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+.btn { display: block; width: 100%; padding: 14px; background: #1768e5; color: white; text-align: center; border-radius: 8px; text-decoration: none; border: none; font-weight: bold; margin-top: 8px; cursor: pointer; font-size: 1rem;}
+.btn-outline { background: white; color: #1768e5; border: 1px solid #1768e5; }
+.input-box { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 12px; box-sizing: border-box; font-size: 1rem; }
+.label { font-size: 0.9rem; color: #333; margin-bottom: 4px; display: block; font-weight: 500; }
+.progress-container { width: 100%; background: #e0e0e0; height: 12px; border-radius: 6px; margin-top: 10px; overflow: hidden; }
+.progress-bar { width: 45%; background: #1768e5; height: 100%; border-radius: 6px; }
+.flex-row { display: flex; justify-content: space-between; align-items: center; }
+.text-muted { color: #5a6478; font-size: 0.9rem; }
+.toggle-switch { width: 40px; height: 20px; background: #1768e5; border-radius: 10px; position: relative; display: inline-block; }
+.toggle-switch::after { content: ''; position: absolute; width: 16px; height: 16px; background: white; border-radius: 50%; top: 2px; right: 2px; }
+.ingredient-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.ingredient-row .input-box { margin-bottom: 0; }
+    </style>
 </head>
 <body>
     <div class="device">
         <div class="status-bar"><span>12:00</span><span>100%</span></div>
-        <div class="header">?섏쓽 ?뚯떇 ?ъ쟾</div>
+        <div class="header">Calorie Atlas (음식 사전)</div>
         <div class="content">
-            <a href="edit_food.html" class="btn" style="margin-top: 0; margin-bottom: 16px;">+ ???뚯떇 ?깅줉?섍린</a>
-            
             <div class="card">
-                <div class="flex-row">
-                    <div>
-                        <h4 style="margin: 0 0 4px 0;">?섏젣 ????댁궡 ?먮윭??(吏곸젒 留뚮뱺 ?뚯떇)</h4>
-                        <span class="text-muted">1???쒓났?? 250g | ?먮윭?쒕쪟</span>
+                <h4 style="margin: 0 0 10px 0;">오프라인 음식 사전 (24개 저장됨)</h4>
+                <p class="text-muted" style="margin-top: 0;">내가 등록한 음식과 레시피 목록입니다.</p>
+                
+                <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 12px;">
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 50px; height: 50px; background: #eee; border-radius: 8px;"></div>
+                        <div>
+                            <div style="font-weight: bold;">닭가슴살 샐러드</div>
+                            <div class="text-muted">직접 만든 음식 · 200g</div>
+                        </div>
                     </div>
-                    <span style="font-weight: bold; color: #1768e5;">350 kcal</span>
+                    <div style="font-weight: bold; color: #1768e5;">240 kcal</div>
                 </div>
-            </div>
 
-            <div class="card">
-                <div class="flex-row">
-                    <div>
-                        <h4 style="margin: 0 0 4px 0;">????댁궡</h4>
-                        <span class="text-muted">100g | ?⑤갚吏?/span>
+                <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 12px;">
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 50px; height: 50px; background: #eee; border-radius: 8px;"></div>
+                        <div>
+                            <div style="font-weight: bold;">스타벅스 아메리카노</div>
+                            <div class="text-muted">카페/음료 · 355ml</div>
+                        </div>
                     </div>
-                    <span style="font-weight: bold; color: #1768e5;">110 kcal</span>
+                    <div style="font-weight: bold; color: #1768e5;">10 kcal</div>
+                </div>
+                
+                <div class="flex-row" style="margin-bottom: 16px; border-bottom: 1px solid #eee; padding-bottom: 12px;">
+                    <div style="display: flex; gap: 12px; align-items: center;">
+                        <div style="width: 50px; height: 50px; background: #eee; border-radius: 8px;"></div>
+                        <div>
+                            <div style="font-weight: bold;">김치찌개</div>
+                            <div class="text-muted">한식 · 400g</div>
+                        </div>
+                    </div>
+                    <div style="font-weight: bold; color: #1768e5;">450 kcal</div>
                 </div>
             </div>
             
-            <div class="card">
-                <div class="flex-row">
-                    <div>
-                        <h4 style="margin: 0 0 4px 0;">?뉖컲</h4>
-                        <span class="text-muted">210g | ?꾩닔?붾Ъ</span>
-                    </div>
-                    <span style="font-weight: bold; color: #1768e5;">315 kcal</span>
-                </div>
-            </div>
+            <a href="edit_food.html" class="btn">+ 새 음식/레시피 직접 등록</a>
         </div>
         <div class="bottom-nav">
-            <a href="index.html" class="nav-item"><div class="nav-icon"></div>?ㅼ씠?대━</a>
-            <a href="foods.html" class="nav-item active"><div class="nav-icon"></div>?뚯떇 紐⑸줉</a>
-            <a href="profile.html" class="nav-item"><div class="nav-icon"></div>?꾨줈??/a>
+            <a href="index.html" class="nav-item ">
+                <div class="nav-icon" style="background-color: #ccc"></div>
+                다이어리
+            </a>
+            <a href="foods.html" class="nav-item active">
+                <div class="nav-icon" style="background-color: #1768e5"></div>
+                음식사전
+            </a>
+            <a href="profile.html" class="nav-item ">
+                <div class="nav-icon" style="background-color: #ccc"></div>
+                내 정보
+            </a>
         </div>
     </div>
 </body>
 </html>
-
