@@ -56,8 +56,7 @@ class CalorieViewModel(
         val aVal = a.toIntOrNull() ?: return@combine 2000
         
         // Mifflin-St Jeor Equation
-        var bmr = (10 * wVal) + (6.25f * hVal) - (5 * aVal)
-        bmr += if (g == "남성") 5f else -161f
+        val bmr = CalorieCalculator.calculateBmr(hVal, wVal, aVal, g == "남성")
 
         val multiplier = when (act) {
             "적음" -> 1.2f

@@ -28,6 +28,12 @@ object CalorieCalculator {
         return ((weightGram * kcalPer100Gram) / 100).toInt()
     }
 
+    fun calculateBmr(heightCm: Float, weightKg: Float, age: Int, isMale: Boolean): Float {
+        var bmr = (10 * weightKg) + (6.25f * heightCm) - (5 * age)
+        bmr += if (isMale) 5f else -161f
+        return bmr
+    }
+
     fun totalIngredientCalories(ingredients: List<IngredientInput>): Int {
         return ingredients.sumOf {
             ingredientCalories(

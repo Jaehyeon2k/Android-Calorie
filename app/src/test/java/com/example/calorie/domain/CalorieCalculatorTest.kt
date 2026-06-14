@@ -8,7 +8,13 @@ import org.junit.Test
 class CalorieCalculatorTest {
     @Test
     fun ingredientCalories_calculatesFromWeightAndKcalPer100Gram() {
-        assertEquals(198, CalorieCalculator.ingredientCalories(120, 165))
+        assertEquals(198, CalorieCalculator.ingredientCalories(120.0, 165.0))
+    }
+
+    @Test
+    fun calculateBmr_returnsCorrectMifflinStJeorValue() {
+        val bmr = CalorieCalculator.calculateBmr(170f, 65f, 25, true)
+        assertEquals(1592.5f, bmr, 0.1f)
     }
 
     @Test
