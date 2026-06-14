@@ -37,7 +37,7 @@ Android Studio에서는 프로젝트를 연 뒤 `app` 실행 구성을 선택해
 ./gradlew assembleDebug
 ```
 
-## 테스트 방법
+## 테스트 실행 방법
 
 ```bash
 ./gradlew test
@@ -47,6 +47,10 @@ Android Studio에서는 프로젝트를 연 뒤 `app` 실행 구성을 선택해
 
 테스트와 정적 분석 실행 결과는 `docs/test_result.md`에 기록합니다.
 
+## AI 협업 (Vibe Coding)
+
+본 프로젝트는 Google의 Gemini AI 에이전트와 협업하여 바이브 코딩(Vibe Coding) 방식으로 개발되었습니다. 기획, 아키텍처 설계(Room DB, MVVM 등), 코드 구현 및 디버깅 전 과정에서 AI와 상호작용하며 문제를 해결하였으며, 관련된 의사결정 및 수정 이력은 `docs/` 폴더 내에 마크다운 문서로 상세히 기록되어 있습니다.
+
 ## 문서
 
-과제 제출용 문서는 `docs/` 폴더에 정리했습니다.
+과제 제출용 문서 및 UI 목업, 테스트 결과 등은 모두 `docs/` 폴더에 정리했습니다.
